@@ -48,28 +48,6 @@ questions = [
 ]
 
 
-class Question:
-    def __init__(self, text, *answers):
-        self.text = text
-        self.answers = [ans for ans in answers]
-
-
-class Answer:
-    def __init__(self, text: str, key: bool):
-        self.text = text
-        self.key = key
-
-
-questions = [
-    Question(
-        '1+1=?',
-        Answer('1', False),
-        Answer('7', False),
-        Answer('3', False),
-        Answer('2', True)
-    )
-]
-
 for question in questions:
     print(question.text)
     for answer in question.answers:
