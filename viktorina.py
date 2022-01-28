@@ -33,7 +33,18 @@ questions = [
              Answers('5', False),
              Answers('2', True)
              ),
-
+    Question('1+6=?',
+             Answers('3', False),
+             Answers('1', False),
+             Answers('5', False),
+             Answers('2', True)
+             ),
+    Question('1+2=?',
+             Answers('3', False),
+             Answers('1', False),
+             Answers('5', False),
+             Answers('2', True)
+             ),
 ]
 
 
