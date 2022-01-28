@@ -2,6 +2,7 @@ class Question:
     def __init__(self, text, *ans):
         self.text = text
         self.answers = [an for an in ans]
+        self.choice= 1
 
 class Answers:
     def __init__(self, text: str, key: bool):
