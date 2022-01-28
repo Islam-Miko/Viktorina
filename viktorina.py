@@ -7,7 +7,7 @@ class Answers:
     def __init__(self, text: str, key: bool):
         self.text = text
         self.key = key
-
+        self.number = 0
 questions = [
     Question('1+1=?',
              Answers('3', False),
