@@ -23,6 +23,9 @@ class Result:
         self.time = time
         self.amount = amount
 
+    def __str__(self):
+        return f'id:{self.name} time:{self.time} amount:{self.amount}'
+
 
 class User:
     def __init__(self, id_, *user_questions):

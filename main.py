@@ -33,9 +33,14 @@ def ask_user(list_questions, username):
             list_answers = question.answers
             for answer in list_answers:
                 print(f'{answer}')
-            choice = int(input('ваш вариант:\n'))
+            choice = input('ваш вариант:\n')
+            try:
+                choice = int(choice)
+            except:
+                print('введите вариант от 1 до 4')
+                return 'no'
             if choice <= 0:
-                print('enter valid variant!')
+                print('введите правильное значение!')
                 break
             try:
                 choice -= 1
@@ -45,24 +50,16 @@ def ask_user(list_questions, username):
                 else:
                     print('wrong :(\n')
             except IndexError:
-                print('enter valid variant!')
+                print('введите правильное значение!')
 
 
-def main():
-    amount_user = int(input('введите количество игроков:\n'))
-    questions = modules.questions
-    used_questions = []
-    used_indexes = []
-    users = []
-    for i in range(amount_user):
-        index_list = index_questions(amount_user, questions, used_indexes)
-        user_question = give_questions(index_list, questions, used_questions)
-        users.append(modules.User(i+1, user_question))
-
-    for user in users:
+def create_result(list_user, list_result):
+    for user in list_user:
         print(f'вопросы для {user.id_} игрока:\n')
         start = datetime.datetime.now()
-        ask_user(user.user_questions, user)
+        is_working = ask_user(user.user_questions, user)
+        if is_working == 'no':
+            return
         difference = datetime.datetime.now() - start
         difference_sec = difference.total_seconds()
         days = divmod(difference_sec, 86400)
@@ -71,6 +68,26 @@ def main():
         seconds = divmod(minutes[1], 1)
         res_time = f'{minutes[0]}:{seconds[0]}'
         user.time = res_time
+        list_result.append(modules.Result(user.id_, user.time, user.amount_right_answers))
+
+
+def main():
+    try:
+        amount_user = int(input('введите количество игроков:\n'))
+    except:
+        print('введите правильное значение в числах')
+        return
+    questions = modules.questions
+    used_questions = []
+    used_indexes = []
+    users = []
+    results = []
+    for i in range(amount_user):
+        index_list = index_questions(amount_user, questions, used_indexes)
+        user_question = give_questions(index_list, questions, used_questions)
+        users.append(modules.User(i+1, user_question))
+
+    create_result(users, results)
 
 
 if __name__ == '__main__':
