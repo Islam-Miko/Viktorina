@@ -1,3 +1,4 @@
+import datetime
 import random
 import modules
 
@@ -25,6 +26,28 @@ def give_questions(indexes, list_of_questions, used):
     return user_questions
 
 
+def ask_user(list_questions, username):
+    for questions in list_questions:
+        for question in questions:
+            print(f'{question.text}\n')
+            list_answers = question.answers
+            for answer in list_answers:
+                print(f'{answer}')
+            choice = int(input('ваш вариант:\n'))
+            if choice <= 0:
+                print('enter valid variant!')
+                break
+            try:
+                choice -= 1
+                if list_answers[choice].key:
+                    print('right <3\n')
+                    username.amount_right_answers += 1
+                else:
+                    print('wrong :(\n')
+            except IndexError:
+                print('enter valid variant!')
+
+
 def main():
     amount_user = int(input('введите количество игроков:\n'))
     questions = modules.questions
@@ -35,6 +58,19 @@ def main():
         index_list = index_questions(amount_user, questions, used_indexes)
         user_question = give_questions(index_list, questions, used_questions)
         users.append(modules.User(i+1, user_question))
+
+    for user in users:
+        print(f'вопросы для {user.id_} игрока:\n')
+        start = datetime.datetime.now()
+        ask_user(user.user_questions, user)
+        difference = datetime.datetime.now() - start
+        difference_sec = difference.total_seconds()
+        days = divmod(difference_sec, 86400)
+        hours = divmod(days[1], 3600)
+        minutes = divmod(hours[1], 60)
+        seconds = divmod(minutes[1], 1)
+        res_time = f'{minutes[0]}:{seconds[0]}'
+        user.time = res_time
 
 
 if __name__ == '__main__':

@@ -29,6 +29,7 @@ class User:
         self.id_ = id_
         self.user_questions = user_questions
         self.amount_right_answers = 0
+        self.time = None
 
     def __str__(self):
         return f'id:{self.id_}\t'
