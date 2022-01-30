@@ -4,11 +4,17 @@ class Question:
         self.answers = [an for an in ans]
         self.choice = 1
 
+    def __str__(self):
+        return f'{self.text}'
+
 
 class Answers:
     def __init__(self, text: str, key: bool):
         self.text = text
         self.key = key
+
+    def __str__(self):
+        return f'{self.text}'
 
 
 class Result:
@@ -16,6 +22,16 @@ class Result:
         self.number = number
         self.time = time
         self.amount = amount
+
+
+class User:
+    def __init__(self, id_, *user_questions):
+        self.id_ = id_
+        self.user_questions = user_questions
+        self.amount_right_answers = 0
+
+    def __str__(self):
+        return f'id:{self.id_}\t'
 
 
 questions = [
