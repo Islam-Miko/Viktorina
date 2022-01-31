@@ -71,7 +71,7 @@ def create_result(list_user, list_result):
         list_result.append(modules.Result(user.id_, user.time, user.amount_right_answers))
 
 
-def who_winner(list_results, list_users):
+def who_winner(list_results):
     list_rights = []
     list_time = []
     for res in list_results:
@@ -104,8 +104,8 @@ def main():
         users.append(modules.User(i+1, user_question))
 
     create_result(users, results)
-    winner = who_winner(results, users)
-    print(f'победитель игорок {winner.number} время: {winner.time}'
+    winner = who_winner(results)
+    print(f'победитель игрок {winner.number} время: {winner.time}'
           f' количество правильных ответов:{winner.amount}')
 
 
