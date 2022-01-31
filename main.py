@@ -31,8 +31,8 @@ def ask_user(list_questions, username):
         for question in questions:
             print(f'{question.text}\n')
             list_answers = question.answers
-            for answer in list_answers:
-                print(f'{answer}')
+            for i, answer in enumerate(list_answers):
+                print(f'{i+1}:{answer}')
             choice = input('ваш вариант:\n')
             try:
                 choice = int(choice)
@@ -66,9 +66,25 @@ def create_result(list_user, list_result):
         hours = divmod(days[1], 3600)
         minutes = divmod(hours[1], 60)
         seconds = divmod(minutes[1], 1)
-        res_time = f'{minutes[0]}:{seconds[0]}'
+        res_time = f'{int(minutes[0]):02d}:{int(seconds[0]):02d}'
         user.time = res_time
         list_result.append(modules.Result(user.id_, user.time, user.amount_right_answers))
+
+
+def who_winner(list_results, list_users):
+    list_rights = []
+    list_time = []
+    for res in list_results:
+        list_rights.append(res.amount)
+        list_time.append(res.time)
+
+    max_points = max(list_rights)
+    list_time.sort()
+    for res in list_results:
+        if res.amount == max_points:
+            for time in list_time:
+                if res.time == time:
+                    return res
 
 
 def main():
@@ -88,6 +104,9 @@ def main():
         users.append(modules.User(i+1, user_question))
 
     create_result(users, results)
+    winner = who_winner(results, users)
+    print(f'победитель игорок {winner.number} время: {winner.time}'
+          f' количество правильных ответов:{winner.amount}')
 
 
 if __name__ == '__main__':

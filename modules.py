@@ -24,7 +24,7 @@ class Result:
         self.amount = amount
 
     def __str__(self):
-        return f'id:{self.name} time:{self.time} amount:{self.amount}'
+        return f'id:{self.number} time:{self.time} amount:{self.amount}'
 
 
 class User:
