@@ -94,6 +94,9 @@ def main():
         print('введите правильное значение в числах')
         return
     questions = modules.questions
+    if amount_user > len(questions):
+        print('вас слишком много, максимум 16')
+        return
     used_questions = []
     used_indexes = []
     users = []
