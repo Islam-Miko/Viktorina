@@ -1,28 +1,21 @@
 import datetime
 import random
+from typing import List, Any
+
 import modules
 
 
-def index_questions(amount_user, list_questions, used):
+def get_questions(quantity_user, list_questions, used):
     len_question = len(list_questions)
-    amount_questions = len_question // amount_user
-    index_of_questions = set()
-    while len(index_of_questions) != amount_questions:
-        index = random.randint(0, len_question-1)
-        if index not in used:
-            index_of_questions.add(index)
-            used.append(index)
-
-    return index_of_questions
-
-
-def give_questions(indexes, list_of_questions, used):
+    amount_questions = len_question // quantity_user
     user_questions = []
-    for i in indexes:
-        if list_of_questions[i] not in used:
-            user_questions.append(list_of_questions[i])
-            used.append(list_of_questions[i])
-
+    while len(user_questions) != amount_questions:
+        choice = random.choice(list_questions)
+        if choice in used:
+            continue
+        else:
+            user_questions.append(choice)
+            used.append(choice)
     return user_questions
 
 
@@ -57,7 +50,7 @@ def create_result(list_user, list_result):
     for user in list_user:
         print(f'вопросы для {user.id_} игрока:\n')
         start = datetime.datetime.now()
-        is_working = ask_user(user.user_questions, user)
+        is_working = ask_user(user.questions, user)
         if is_working == 'no':
             return
         difference = datetime.datetime.now() - start
@@ -97,13 +90,11 @@ def main():
     if amount_user > len(questions):
         print('вас слишком много, максимум 16')
         return
-    used_questions = []
-    used_indexes = []
     users = []
     results = []
+    used_questions = []
     for i in range(amount_user):
-        index_list = index_questions(amount_user, questions, used_indexes)
-        user_question = give_questions(index_list, questions, used_questions)
+        user_question = get_questions(amount_user, questions, used_questions)
         users.append(modules.User(i+1, user_question))
 
     create_result(users, results)

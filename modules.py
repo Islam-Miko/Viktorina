@@ -28,9 +28,9 @@ class Result:
 
 
 class User:
-    def __init__(self, id_, *user_questions):
+    def __init__(self, id_, *questions):
         self.id_ = id_
-        self.user_questions = user_questions
+        self.questions = questions
         self.amount_right_answers = 0
         self.time = None
 
