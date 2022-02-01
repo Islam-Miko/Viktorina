@@ -102,6 +102,6 @@ def main():
     print(f'победитель игрок {winner.number} время: {winner.time}'
           f' количество правильных ответов:{winner.amount}')
 
-
+#test
 if __name__ == '__main__':
     main()
