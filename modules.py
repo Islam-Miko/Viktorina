@@ -3,6 +3,7 @@ class Question:
         self.text = text
         self.answers = [an for an in ans]
         self.choice = 1
+        self.correct_answer = [an for an in ans if an.key is True]
 
     def __str__(self):
         return f'{self.text}'
@@ -18,10 +19,11 @@ class Answers:
 
 
 class Result:
-    def __init__(self, number, time, amount):
+    def __init__(self, number, time, amount, name):
         self.number = number
         self.time = time
         self.amount = amount
+        self.name = name
 
     def __str__(self):
         return f'id:{self.number} time:{self.time} amount:{self.amount}'

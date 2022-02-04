@@ -1,21 +1,18 @@
 import datetime
 import random
-from typing import List, Any
-
+from database import create_table, insert_in_table, get_from_db
 import modules
 
 
-def get_questions(quantity_user, list_questions, used):
+def get_questions(quantity_user, list_questions):
     len_question = len(list_questions)
     amount_questions = len_question // quantity_user
     user_questions = []
     while len(user_questions) != amount_questions:
         choice = random.choice(list_questions)
-        if choice in used:
-            continue
-        else:
-            user_questions.append(choice)
-            used.append(choice)
+        list_questions.remove(choice)
+        user_questions.append(choice)
+
     return user_questions
 
 
@@ -41,27 +38,23 @@ def ask_user(list_questions, username):
                     print('right <3\n')
                     username.amount_right_answers += 1
                 else:
-                    print('wrong :(\n')
+                    print('неправильно\n'
+                          'правильный вариант:')
+                    print(question.correct_answer[0].text)
             except IndexError:
                 print('введите правильное значение!')
 
 
 def create_result(list_user, list_result):
     for user in list_user:
+        name = input('введите ваше имя:\n')
         print(f'вопросы для {user.id_} игрока:\n')
         start = datetime.datetime.now()
         is_working = ask_user(user.questions, user)
         if is_working == 'no':
             return
-        difference = datetime.datetime.now() - start
-        difference_sec = difference.total_seconds()
-        days = divmod(difference_sec, 86400)
-        hours = divmod(days[1], 3600)
-        minutes = divmod(hours[1], 60)
-        seconds = divmod(minutes[1], 1)
-        res_time = f'{int(minutes[0]):02d}:{int(seconds[0]):02d}'
-        user.time = res_time
-        list_result.append(modules.Result(user.id_, user.time, user.amount_right_answers))
+        user.time = datetime.datetime.now() - start
+        list_result.append(modules.Result(user.id_, user.time, user.amount_right_answers, name))
 
 
 def who_winner(list_results):
@@ -81,27 +74,42 @@ def who_winner(list_results):
 
 
 def main():
-    try:
-        amount_user = int(input('введите количество игроков:\n'))
-    except:
-        print('введите правильное значение в числах')
-        return
-    questions = modules.questions
-    if amount_user > len(questions):
-        print('вас слишком много, максимум 16')
-        return
-    users = []
-    results = []
-    used_questions = []
-    for i in range(amount_user):
-        user_question = get_questions(amount_user, questions, used_questions)
-        users.append(modules.User(i+1, user_question))
+    choice = int(input('выберите:\n'
+                       '1: начать викторину\n'
+                       '2: посмотреть статистику\n'))
+    if choice == 1:
+        try:
+            amount_user = int(input('введите количество игроков:\n'))
+        except:
+            print('введите правильное значение в числах')
+            return
+        questions = modules.questions
+        if amount_user > len(questions):
+            print('вас слишком много, максимум 16')
+            return
+        users = []
+        results = []
+        for i in range(amount_user):
+            user_question = get_questions(amount_user, questions)
+            users.append(modules.User(i+1, user_question))
 
-    create_result(users, results)
-    winner = who_winner(results)
-    print(f'победитель игрок {winner.number} время: {winner.time}'
-          f' количество правильных ответов:{winner.amount}')
+        create_result(users, results)
+        winner = who_winner(results)
+        print(f'победитель игрок {winner.number} время: {winner.time}'
+              f' количество правильных ответов:{winner.amount}')
 
-#test
+        create_table()
+        points = (winner.amount * winner.time).total_seconds()
+        today = datetime.datetime.today()
+        insert_in_table(f'{winner.name}', points, today)
+
+    elif choice == 2:
+        get_from_db()
+
+    else:
+        print('введите 1 или 2')
+        return
+
+
 if __name__ == '__main__':
     main()
