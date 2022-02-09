@@ -3,7 +3,7 @@ class Question:
         self.text = text
         self.answers = [an for an in ans]
         self.choice = 1
-        self.correct_answer = [an for an in ans if an.key is True]
+        self.correct_answer = [an for an in ans if an.key]
 
     def __str__(self):
         return f'{self.text}'
@@ -24,6 +24,7 @@ class Result:
         self.time = time
         self.amount = amount
         self.name = name
+        self.coeff = amount / time.seconds
 
     def __str__(self):
         return f'id:{self.number} time:{self.time} amount:{self.amount}'

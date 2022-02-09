@@ -30,19 +30,20 @@ def ask_user(list_questions, username):
                 print('введите вариант от 1 до 4')
                 return 'no'
             if choice <= 0:
-                print('введите правильное значение!')
-                break
+                print('введите правильное значение от 1 до 4')
+                return 'no'
             try:
                 choice -= 1
                 if list_answers[choice].key:
-                    print('right <3\n')
+                    print('правильно\n')
                     username.amount_right_answers += 1
                 else:
                     print('неправильно\n'
                           'правильный вариант:')
                     print(question.correct_answer[0].text)
             except IndexError:
-                print('введите правильное значение!')
+                print('введите правильное значение от 1 до 4')
+                return 'no'
 
 
 def create_result(list_user, list_result):
@@ -58,19 +59,8 @@ def create_result(list_user, list_result):
 
 
 def who_winner(list_results):
-    list_rights = []
-    list_time = []
-    for res in list_results:
-        list_rights.append(res.amount)
-        list_time.append(res.time)
-
-    max_points = max(list_rights)
-    list_time.sort()
-    for res in list_results:
-        if res.amount == max_points:
-            for time in list_time:
-                if res.time == time:
-                    return res
+    winner = max(list_results, key=lambda x: x.coeff)
+    return winner
 
 
 def main():
@@ -99,9 +89,10 @@ def main():
               f' количество правильных ответов:{winner.amount}')
 
         create_table()
-        points = (winner.amount * winner.time).total_seconds()
+        points = winner.amount / winner.time.seconds
         today = datetime.datetime.today()
-        insert_in_table(f'{winner.name}', points, today)
+        if points != 0:
+            insert_in_table(winner.name, points, today)
 
     elif choice == 2:
         get_from_db()
