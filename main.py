@@ -1,6 +1,6 @@
 import datetime
 
-from servais import quest, winner
+from servais import quest, qwe
 from modls import User, questions
 from database import data, read_db
 
@@ -35,7 +35,7 @@ def main():
             all_user.append(user)
 
         print('-----' * 5)
-        user_winner = winner(all_user)
+        user_winner = qwe(all_user)
         print(user_winner)
         if user_winner.total == 0:
             print('нету подебителя')
