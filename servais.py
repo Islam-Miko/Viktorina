@@ -15,7 +15,7 @@ def quest(number):
     return list_
 
 
-def qwe(list_user):
+def winner(list_user):
     records = []
     for i in list_user:
         total_total = i.winner_coef()
