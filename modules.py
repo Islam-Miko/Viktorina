@@ -31,7 +31,7 @@ class Result:
 
 
 class User:
-    def __init__(self, id_, *questions):
+    def __init__(self, id_, questions):
         self.id_ = id_
         self.questions = questions
         self.amount_right_answers = 0
