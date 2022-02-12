@@ -5,9 +5,9 @@ from decouple import config
 def data(champ):
     try:
         connection = psycopg2.connect(
-            user='postgres',
-            password='postgre',
-            database='python2',
+            user=config('DB_USER'),
+            password=config('DB_PSD'),
+            database=config('DB'),
             host='localhost',
             port='5432'
         )
@@ -38,9 +38,9 @@ def data(champ):
 def read_db():
     try:
         connection = psycopg2.connect(
-            user='postgres',
-            password='postgre',
-            database='python2',
+            user=config('DB_USER'),
+            password=config('DB_PSD'),
+            database=config('DB'),
             host='localhost',
             port='5432'
         )

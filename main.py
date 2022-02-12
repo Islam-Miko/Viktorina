@@ -3,8 +3,6 @@ from services import quest, winners
 from models import User, questions
 from database import data, read_db
 
-
-
 def main():
 
     all_user = []

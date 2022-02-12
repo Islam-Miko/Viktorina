@@ -23,29 +23,35 @@ class User:
 
 
 questions = [
-    Question('1+1=?',
-             Answers('3', False),
-             Answers('1', False),
-             Answers('5', False),
-             Answers('2', True)
+    Question('Что напечатает следующий код print((1 ,2, 3)<(1, 2, 4))',
+             Answers('None', False),
+             Answers('True', True),
+             Answers('False', False),
+             Answers('Ошибка', False)
              ),
-    Question('1+4=?',
-             Answers('3', False),
-             Answers('1', False),
-             Answers('8', False),
-             Answers('5', True)
+    Question('Что делает следующий код: def a(b, c, d): pass',
+             Answers('Определяет список и инициализирует его', False),
+             Answers('Определяет функцию, которая ничего не делает', True),
+             Answers('Определяет функцию, которая передает параметры', False),
+             Answers('Определяет пустой класс', False)
              ),
-    Question('1+3=?',
-             Answers('3', False),
-             Answers('1', False),
-             Answers('5', False),
-             Answers('4', True)
+    Question('Что выведет следующий код в Python 3.x? print(type(1 / 2))',
+             Answers("class 'tuple'", False),
+             Answers("class 'int'", False),
+             Answers("class 'number'", False),
+             Answers('class float', True)
              ),
-    Question('1+5=?',
-             Answers('3', False),
-             Answers('1', False),
-             Answers('5', False),
-             Answers('6', True)
+    Question('Какая из функций вернет итерируемый объект?',
+             Answers('len()', False),
+             Answers('xrange()', False),
+             Answers('range()', True),
+             Answers('ord()', False)
+             ),
+    Question("Какого типа будет результат следующего выражения: (' ',)",
+             Answers('str(строка)', False),
+             Answers('tuple(кортеж)', True),
+             Answers('возникнет синтаксическая ошибка', False),
+             Answers('unicode строка', False)
              ),
 
 ]

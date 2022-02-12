@@ -17,15 +17,6 @@ def winners(list_user):
     winner = max(list_user, key=lambda x: x.coef())
     return winner
 
-    # records = []
-    # for i in list_user:
-    #     total = i.total
-    #     time = i.time
-    #     total_total = total/time
-    #     records.append(total_total)
-    # win_coef = max(records)
-    # for user in
-    # return max(records)
 
 
 
