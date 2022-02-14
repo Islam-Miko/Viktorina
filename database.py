@@ -34,7 +34,6 @@ def data(champ):
     finally:
         connection.close()
         cursor.close()
-
 def read_db():
     try:
         connection = psycopg2.connect(

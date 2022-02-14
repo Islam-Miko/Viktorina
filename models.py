@@ -8,6 +8,7 @@ class Answers:
         self.text = text
         self.key = key
 
+
 class User:
     def __init__(self, id):
         self.id = id
